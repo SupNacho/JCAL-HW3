@@ -40,6 +40,7 @@ public class Main {
             sis = new SequenceInputStream(enumeration);
             fos = new FileOutputStream("partitions.txt");
             int x;
+
             while ((x = sis.read()) != -1) {
                 fos.write(x);
             }
@@ -64,9 +65,11 @@ public class Main {
             int pages = (int) ((length/ CHARS_IN_PAGE) + 1);
             boolean exit = false;
             System.out.println("Время запуска: " + (System.currentTimeMillis() - t));
+
             while ( !exit ) {
                 System.out.println("В документе " + pages +" стрианиц. Введите номер страницы для просмотра или 0 для выхода.");
-                int page = scanner.nextInt(); // Проверку на ввод НЕ чисел не делал, чтоб нераздувать код.
+                int page = scanner.nextInt(); // Проверку на ввод НЕ чисел не делал, чтоб не раздувать код.
+
                 if (page == 0) {
                     exit = true;
                     System.out.println("Завершение работы...");
@@ -75,6 +78,7 @@ public class Main {
                     System.out.println("В этой книге " + pages + " страниц, введите цифры от 1 до " + pages + " включительно.");
                     continue;
                 }
+
                 t = System.currentTimeMillis();
                 System.out.println("Страница: " + page);
                 int pageStartPoint = (page * CHARS_IN_PAGE) - CHARS_IN_PAGE;// Рассчитываем позицию первого символа страницы
@@ -82,9 +86,11 @@ public class Main {
                 raf.seek(pageStartPoint);
                 int x;
                 StringBuilder sb = new StringBuilder("");
+
                 while ((x = raf.read()) != -1 && raf.getFilePointer() <= pageEnd) {
                     sb.append((char) x);
                 }
+
                 System.out.println(sb.toString());
                 System.out.println("Время чтения страницы: " + (System.currentTimeMillis() - t));
             }
